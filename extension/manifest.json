@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "StockExt Plugin",
+  "version": "0.2.0",
+  "description": "WebSocket client for local service integration",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chat.deepseek.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
