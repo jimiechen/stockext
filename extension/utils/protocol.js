@@ -9,6 +9,10 @@ const MSG_TYPE = {
   PING: "PING",
   PONG: "PONG",
   STATUS_REPORT: "STATUS_REPORT",
+  ANALYZE_REQUEST: "ANALYZE_REQUEST",
+  ANALYZE_PROGRESS: "ANALYZE_PROGRESS",
+  ANALYZE_RESPONSE: "ANALYZE_RESPONSE",
+  ERROR: "ERROR",
 };
 
 function build(type, payload = {}) {
@@ -37,6 +41,41 @@ function statusReport(status) {
   return build(MSG_TYPE.STATUS_REPORT, { status });
 }
 
+function analyzeRequest(requestId, taskId, payload) {
+  return build(MSG_TYPE.ANALYZE_REQUEST, {
+    request_id: requestId,
+    task_id: taskId,
+    ...payload,
+  });
+}
+
+function analyzeProgress(requestId, taskId, stage, detail = {}) {
+  return build(MSG_TYPE.ANALYZE_PROGRESS, {
+    request_id: requestId,
+    task_id: taskId,
+    stage,
+    ...detail,
+  });
+}
+
+function analyzeResponse(requestId, taskId, payload) {
+  return build(MSG_TYPE.ANALYZE_RESPONSE, {
+    request_id: requestId,
+    task_id: taskId,
+    ...payload,
+  });
+}
+
+function error(requestId, taskId, code, message, retryable = false) {
+  return build(MSG_TYPE.ERROR, {
+    request_id: requestId,
+    task_id: taskId,
+    code,
+    message,
+    retryable,
+  });
+}
+
 function parse(raw) {
   try {
     return JSON.parse(raw);
@@ -54,6 +93,10 @@ if (typeof module !== "undefined" && module.exports) {
     ping,
     pong,
     statusReport,
+    analyzeRequest,
+    analyzeProgress,
+    analyzeResponse,
+    error,
     parse,
   };
 }
