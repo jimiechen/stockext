@@ -6,7 +6,7 @@ TDD approach: write the test first, then implement the handler.
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from local_service.websocket_handler import WebSocketHandler, mask_token
+from local_service.services.ws_handler import WebSocketHandler, mask_token
 
 
 class TestMaskToken:

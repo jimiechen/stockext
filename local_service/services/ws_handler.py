@@ -12,7 +12,7 @@ import logging
 
 from fastapi import WebSocket, WebSocketDisconnect
 
-from local_service import config
+from local_service.core import config
 
 logger = logging.getLogger(__name__)
 

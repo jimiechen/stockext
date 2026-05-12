@@ -6,12 +6,12 @@ Explicitly binds to 127.0.0.1 (never 0.0.0.0).
 
 import uvicorn
 
-from local_service import config
+from local_service.core.config import HOST, PORT
 
 if __name__ == "__main__":
     uvicorn.run(
         "local_service.app:app",
-        host=config.HOST,
-        port=config.PORT,
+        host=HOST,
+        port=PORT,
         reload=False,
     )

@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from starlette.websockets import WebSocketDisconnect
 
 from local_service.app import app
-from local_service import config
+from local_service.core import config
 
 
 @pytest.fixture

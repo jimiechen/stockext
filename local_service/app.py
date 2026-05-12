@@ -3,25 +3,16 @@
 Imports config values instead of hard-coding them.
 """
 
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 
-from local_service import config
-from local_service.websocket_handler import WebSocketHandler
+from local_service.api.routes import router as api_router
+from local_service.api.websocket import plugin_ws
+from local_service.core.config import WS_PATH
 
 app = FastAPI()
 
+# Register HTTP routes
+app.include_router(api_router)
 
-@app.get("/health")
-async def health() -> dict:
-    return {
-        "status": "ok",
-        "service": "tdx-deepseek-feishu-mvp",
-        "version": "0.2.0",
-    }
-
-
-@app.websocket(config.WS_PATH)
-async def plugin_ws(websocket: WebSocket) -> None:
-    """WebSocket endpoint for plugin communication."""
-    handler = WebSocketHandler()
-    await handler.handle(websocket)
+# Register WebSocket endpoint
+app.websocket(WS_PATH)(plugin_ws)
